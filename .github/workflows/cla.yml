@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Deepnest-Commercial
+#
+# CLA check for this repo. The logic lives in deepnest-next/.github (cla-reusable.yml);
+# signatures are stored in deepnest-next/cla-signatures. Needs variable CLA_APP_CLIENT_ID
+# and secret CLA_APP_PRIVATE_KEY (org-level for public repos, repo-level for private repos;
+# scripts/apply-repo-policy.sh in deepnest-next/.github sets them up).
+
+name: CLA
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+# One CLA run per PR at a time; never cancel, the signature write must not race.
+concurrency:
+  group: cla-${{ github.event.issue.number || github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  cla:
+    # PR events, and PR comments from the PR author or a maintainer only.
+    # Dependabot runs get no Actions secrets, so its PRs skip this check (skipped counts
+    # as passed) and ci.yml lets dependabot[bot] through the gate.
+    if: |
+      (github.event_name == 'pull_request_target' &&
+       github.event.pull_request.user.login != 'dependabot[bot]') ||
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.pull_request != null &&
+       (github.event.comment.user.login == github.event.issue.user.login ||
+        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)))
+    permissions:
+      contents: read
+      pull-requests: write
+      statuses: write
+      actions: write
+    uses: deepnest-next/.github/.github/workflows/cla-reusable.yml@main
+    with:
+      client-id: ${{ vars.CLA_APP_CLIENT_ID }}
+    secrets:
+      CLA_APP_PRIVATE_KEY: ${{ secrets.CLA_APP_PRIVATE_KEY }}

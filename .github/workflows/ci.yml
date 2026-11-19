@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Deepnest-Commercial
+#
+# CI, gated on the CLA: no job runs for a pull request until all committers have signed
+# the deepnest CLA v2.0 (label `cla-signed`, set by the CLA workflow). Make `ci-required`
+# the required status check; add your jobs to its `needs`.
+
+name: CI
+
+on:
+  pull_request:
+    # labeled/unlabeled: re-run when the CLA workflow adds or removes `cla-signed`.
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  cla-gate:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require CLA v2.0 signature
+        if: |
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.user.login != 'dependabot[bot]' &&
+          !contains(github.event.pull_request.labels.*.name, 'cla-signed')
+        run: |
+          echo "::error title=CLA not signed::All committers must sign the deepnest CLA v2.0 before CI runs. See the CLA comment on this pull request."
+          exit 1
+
+  build:
+    needs: cla-gate
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Replace with this repo's build, lint and tests.
+      - run: echo "TODO - build and test"
+
+  # The single required status check. always() so it reports even when a need failed or was
+  # skipped; a skipped required check would otherwise count as passed.
+  ci-required:
+    if: always()
+    needs: [cla-gate, build]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: All required jobs passed
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "results: $RESULTS"
+          for r in $RESULTS; do [ "$r" = success ] || exit 1; done
