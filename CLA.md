@@ -169,8 +169,15 @@ body or health and under the German Product Liability Act remains unaffected.
 
 ## 11. Term
 
-11.1 This Agreement takes effect when You sign it. It applies to all Contributions You have
-Submitted before and all those You Submit after.
+11.1 This Agreement takes effect when You sign it. **One signature covers all Projects and
+all Contributions**, those You have Submitted before signing and those You Submit after.
+
+11.1a **Earlier Contributions.** For Contributions Submitted before You signed, the rights under
+this Agreement are granted **retroactively**, with effect from the time each Contribution was
+Submitted. You approve every use of these earlier Contributions that We, Our Affiliates,
+Successors or licensees made before You signed, including publication, distribution and
+licensing under open-source and commercial licences. You waive all claims arising from such
+use.
 
 11.2 The rights granted are **perpetual and irrevocable**. They survive any end of Your
 participation in the Projects.

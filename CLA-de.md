@@ -175,8 +175,16 @@ Produkthaftungsgesetz bleibt unberührt.
 
 ## 11. Laufzeit
 
-11.1 Diese Vereinbarung wird mit Ihrer Unterzeichnung wirksam. Sie gilt für alle zuvor und
-künftig Übermittelten Beiträge.
+11.1 Diese Vereinbarung wird mit Ihrer Unterzeichnung wirksam. **Eine Unterschrift gilt für
+alle Projekte und alle Beiträge**, die Sie vor der Unterzeichnung Übermittelt haben und die Sie
+danach Übermitteln.
+
+11.1a **Frühere Beiträge.** Für Beiträge, die Sie vor der Unterzeichnung Übermittelt haben, werden
+die Rechte aus dieser Vereinbarung **rückwirkend** eingeräumt, jeweils ab dem Zeitpunkt der
+Übermittlung. Sie genehmigen jede Nutzung dieser früheren Beiträge, die Wir, Unsere Verbundenen
+Unternehmen, Rechtsnachfolger oder Lizenznehmer vor Ihrer Unterzeichnung vorgenommen haben,
+einschließlich Veröffentlichung, Vertrieb und Lizenzierung unter Open-Source- und kommerziellen
+Lizenzen. Sie verzichten auf alle Ansprüche aus dieser Nutzung.
 
 11.2 Die eingeräumten Rechte sind **zeitlich unbefristet und unwiderruflich**. Sie bestehen auch
 nach dem Ende Ihrer Mitwirkung an den Projekten fort.
